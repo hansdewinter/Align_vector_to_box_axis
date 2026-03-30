@@ -3,9 +3,12 @@ defined by two Gromacs index groups, gets aligned to one of the three main axes 
 y, or z). The user can also specify a group that is used to move its center-of-mass
 to the box center, the origin, or a spcified coordinate.
 
-Usage:
+USAGE:
+
+```bash
 $ ./align_vector_to_box_axis.py [-h] -f GRO -n NDX -g1 GROUP1 -g2 GROUP2 [--axis {x,y,z}] [-gc GROUP_CENTER]
                                    [--center-target CENTER_TARGET] -o OUTPUT
+```
 
 OPTIONS:
 
