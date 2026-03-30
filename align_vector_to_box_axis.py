@@ -170,6 +170,7 @@ def write_gro(path: str, title: str, atoms: List[Atom], box: np.ndarray) -> None
 def read_ndx(path: str) -> Dict[str, List[int]]:
     groups: Dict[str, List[int]] = {}
     current = None
+    header_re = re.compile(r"^\[\s*(?P<name>[^\]]+?)\s*\](?:\s*[;#].*)?$")
 
     with open(path, "r", encoding="utf-8") as fh:
         for lineno, raw in enumerate(fh, start=1):
@@ -177,9 +178,10 @@ def read_ndx(path: str) -> Dict[str, List[int]]:
             if not line:
                 continue
 
-            # Header line: [ GroupName ]
-            if line.startswith("[") and line.endswith("]"):
-                current = line[1:-1].strip()
+            # Header line: [ GroupName ] (optionally followed by comment)
+            m = header_re.match(line)
+            if m:
+                current = m.group("name").strip()
                 groups[current] = []
                 continue
 
@@ -188,6 +190,8 @@ def read_ndx(path: str) -> Dict[str, List[int]]:
 
             # Only keep integer tokens; ignore accidental junk
             for token in line.split():
+                if token in {"[", "]"}:
+                    continue
                 try:
                     groups[current].append(int(token))
                 except ValueError:
