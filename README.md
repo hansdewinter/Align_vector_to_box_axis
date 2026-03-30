@@ -1,7 +1,7 @@
 This Python3 script takes in a Gromacs .gro file and rotates it so that a vector, 
 defined by two Gromacs index groups, gets aligned to one of the three main axes (x,
 y, or z). The user can also specify a group that is used to move its center-of-mass
-to the box center, the origin, or a spcified coordinate.
+to the box center, the origin, or a specified coordinate.
 
 USAGE:
 
